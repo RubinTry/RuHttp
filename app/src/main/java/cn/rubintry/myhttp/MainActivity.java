@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Http请求";
     private static final int REQUEST_CODE = 1111;
 
-//    private String url = "http://101.37.71.102/vc/inf/route/list";
-    private String url = "https://github.com/";
+    private String url = "http://101.37.71.102/vc/inf/route/list";
+//    private String url = "https://github.com/";
     private String[] permissionArray = new String[]{
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_NETWORK_STATE,
@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
         RuHttp ruHttp = new RuHttp.Builder<>()
                 .setMethod(MethodType.GET)
                 .setUrl(url)
-                .setType(String.class)
-                .setHttpRequestListener(new IRuHttpRequestListener<String>() {
+                .setType(ResultModel.class)
+                .setHttpRequestListener(new IRuHttpRequestListener<ResultModel>() {
 
                     @Override
-                    public void onSuccess(String resultModel) {
-                        Log.d(TAG, "结果: " + resultModel);
+                    public void onSuccess(ResultModel resultModel) {
+                        Log.d(TAG, "结果: " + new Gson().toJson(resultModel));
                         Log.d(TAG, "成功，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
                         startTime = System.currentTimeMillis();
                     }
@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "请求失败，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
                     }
                 }).build();
+        for (int i = 0; i < 1000; i++) {
             ruHttp.execute();
+        }
     }
 
     @Override

@@ -33,19 +33,6 @@ public class RuHttp<T, K> {
         this.url = builder.url;
     }
 
-//    public static <T , K> void sendRequest(String url , T data , Class <K> cls, String method , IRuHttpRequestListener listener){
-//        //构建一个请求对象 里氏替换原则
-//        IHttpRequest iHttpRequest = new HttpRequest();
-//        //构建一个返回时的回调函数
-//        IRuHttpResponseListener iRuHttpResponseListener = new RuHttpResponseListener<>(cls , listener);
-//
-//        //构建一个请求执行线程
-//        HttpTask httpTask = new HttpTask(iHttpRequest , url , data , method , DEFAULT_CONNECT_TIMEOUT , DEFAULT_READ_TIMEOUT , iRuHttpResponseListener);
-//        httpTask.setRetryMaxTimes(retryMaxTimes == 0 ? DEFAULT_RETRY_TIMES : retryMaxTimes);
-//        //构建一个线程池进行管理
-//        ThreadManager.getInstance().addTask(httpTask);
-//    }
-
     public void execute() {
         //构建一个请求对象 里氏替换原则
         IHttpRequest iHttpRequest = new HttpRequest();
@@ -60,11 +47,20 @@ public class RuHttp<T, K> {
     }
 
 
+    /**
+     * 设置最大重试次数
+     * @param retryMaxTimes
+     */
     public static void setRetryMaxTimes(int retryMaxTimes) {
         RuHttp.retryMaxTimes = retryMaxTimes;
     }
 
 
+    /**
+     * http构建器
+     * @param <T>
+     * @param <K>
+     */
     public static class Builder<T, K> {
         private String url;
         private Map<String, T> params;
