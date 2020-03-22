@@ -27,9 +27,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Http请求";
     private static final int REQUEST_CODE = 1111;
 
-    private String url = "http://101.37.71.102/vc/inf/route/list";
+//    private String url = "http://101.37.71.102/vc/inf/route/list";
+    private String url = "https://github.com/";
     private String[] permissionArray = new String[]{
-            Manifest.permission.INTERNET
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
     };
 
     private long startTime;
@@ -53,25 +56,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void test(View view) {
         startTime = System.currentTimeMillis();
-//        for (int i = 0; i < 1000; i++) {
-//            final int finalI = i;
-        Map<String, Object> params = new TreeMap<>();
-        params.put("accessId", "86eb9eb5c28b46a3924c7935d26895c8");
-        params.put("sign", "6EC8DDF3059A2B9433DB43F9073A72D4");
-        params.put("orgId", "0654a8e3feec4f00ac992bc77e816118");
 
 
         RuHttp ruHttp = new RuHttp.Builder<>()
-                .setMethod(MethodType.POST)
+                .setMethod(MethodType.GET)
                 .setUrl(url)
-                .addParam("accessId", "86eb9eb5c28b46a3924c7935d26895c8")
-                .addParam("sign", "6EC8DDF3059A2B9433DB43F9073A72D4")
-                .addParam("orgId", "0654a8e3feec4f00ac992bc77e816118")
-                .setType(ResultModel.class)
-                .setHttpRequestListener(new IRuHttpRequestListener<ResultModel>() {
+                .setType(String.class)
+                .setHttpRequestListener(new IRuHttpRequestListener<String>() {
 
                     @Override
-                    public void onSuccess(ResultModel resultModel) {
+                    public void onSuccess(String resultModel) {
+                        Log.d(TAG, "结果: " + resultModel);
                         Log.d(TAG, "成功，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
                         startTime = System.currentTimeMillis();
                     }
@@ -82,9 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "请求失败，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
                     }
                 }).build();
-        for (int i = 0; i < 10000; i++) {
             ruHttp.execute();
-        }
     }
 
     @Override

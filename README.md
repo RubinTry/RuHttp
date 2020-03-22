@@ -5,6 +5,14 @@
 # About
 **[RuHttp][readme]**:fire: 是一个高性能、高并发、高扩展性的安卓http客户端，它可以使您的内容加载更快并节省带宽。:fire:
 
+## 特性
+1.目前支持基于http的GET、POST请求<br/>
+2.支持Android x<br/>
+3.支持高并发
+
+
+
+
 ## 如何引入
 
 ### 如何使用
