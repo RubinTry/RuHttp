@@ -14,6 +14,9 @@
 
 
 ## 如何引入
+```groovy
+implementation 'cc.rubintry.ruhttp:ruhttp:1.0.0'
+```
 
 ### 如何使用
 ```java
