@@ -1,7 +1,6 @@
 [![Logo](https://github.com/RubinTry/RuHttp/blob/master/repository/img/logo.png)](https://github.com/RubinTry/RuHttp)
 
 
-[![auc][aucSvg]][auc] [![result][apiSvg]][result] [![build][buildSvg]][build] [![License][licenseSvg]][license]
 
 # About
 **[RuHttp][readme]**:fire: 是一个高性能、高并发、高扩展性的安卓http客户端，它可以使您的内容加载更快并节省带宽。:fire:
