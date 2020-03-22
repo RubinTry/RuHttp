@@ -40,7 +40,7 @@ dependencies {
 
 def siteUrl = 'https://github.com/RubinTry/RuHttp'                        // #CONFIG# // project homepage
 def gitUrl = 'git@github.com:RubinTry/RuHttp.git'                     // #CONFIG# // project git
-group = "cc.rubintry.ruhttp"
+group = "cn.rubintry.ruhttp"
 
 install {
     repositories.mavenInstaller {
