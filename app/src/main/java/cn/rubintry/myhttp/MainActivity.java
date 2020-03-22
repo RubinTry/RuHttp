@@ -68,11 +68,12 @@ public class MainActivity extends AppCompatActivity {
                 .addParam("sign", "6EC8DDF3059A2B9433DB43F9073A72D4")
                 .addParam("orgId", "0654a8e3feec4f00ac992bc77e816118")
                 .setType(ResultModel.class)
-                .setHttpRequestListener(new IRuHttpRequestListener() {
+                .setHttpRequestListener(new IRuHttpRequestListener<ResultModel>() {
+
                     @Override
-                    public void onSuccess(Object o) {
-                        startTime = System.currentTimeMillis();
+                    public void onSuccess(ResultModel resultModel) {
                         Log.d(TAG, "成功，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
+                        startTime = System.currentTimeMillis();
                     }
 
                     @Override

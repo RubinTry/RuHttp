@@ -17,12 +17,13 @@ import java.io.UnsupportedEncodingException;
 public class RuHttpResponseListener<T> implements IRuHttpResponseListener {
 
     private Class<T> cls;
-    private IRuHttpRequestListener listener;
+    private IRuHttpRequestListener<T> listener;
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    public RuHttpResponseListener(Class<T> cls , IRuHttpRequestListener listener) {
+    public RuHttpResponseListener(Class<T> cls , IRuHttpRequestListener<T> listener) {
         this.cls = cls;
         this.listener = listener;
+
     }
 
     @Override
@@ -45,7 +46,7 @@ public class RuHttpResponseListener<T> implements IRuHttpResponseListener {
                 @Override
                 public void run() {
                     if(listener != null){
-                        listener.onSuccess(jsonStr);
+                        listener.onSuccess((T) jsonStr);
                     }
                 }
             });

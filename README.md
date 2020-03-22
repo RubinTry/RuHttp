@@ -5,7 +5,32 @@
 # About
 **[RuHttp][readme]**:fire: 是一个高性能、高并发、高扩展性的安卓http客户端，它可以使您的内容加载更快并节省带宽。:fire:
 
-## 如何使用
+## 如何引入
+
+### 如何使用
+```java
+   RuHttp ruHttp = new RuHttp.Builder<>()
+                .setMethod(MethodType.POST)//指定请求方式
+                .setUrl(url)
+                .addParam("key", "value")
+                .addParam("key", "value")
+                .addParam("key", "value")
+                .setType(你的model类.class)
+                .setHttpRequestListener(new IRuHttpRequestListener<你的model类>() {
+                    @Override
+                    public void onSuccess(你的model类 o) {
+                        ...
+                    }
+
+                    @Override
+                    public void onFail(Throwable e) {
+                        ...
+                    }
+                }).build();
+    //发起请求
+    ruHttp.execute();
+```
+
 
 ## License
 ```text
