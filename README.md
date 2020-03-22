@@ -1,2 +1,2 @@
 # RuHttp
-[![logo][logo]](https://github.com/Blankj/AndroidUtilCode)
+[![logo][logo]](https://github.com/Rubintry/RuHttp)
