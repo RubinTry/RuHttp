@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkPermission() {
         for (String permission : permissionArray) {
-            if(ContextCompat.checkSelfPermission(this , permission) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this , permissionArray , REQUEST_CODE);
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, permissionArray, REQUEST_CODE);
                 break;
             }
         }
@@ -55,38 +55,50 @@ public class MainActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
 //        for (int i = 0; i < 1000; i++) {
 //            final int finalI = i;
-            Map<String , Object> params = new TreeMap<>();
-            params.put("accessId" , "86eb9eb5c28b46a3924c7935d26895c8");
-            params.put("sign" , "6EC8DDF3059A2B9433DB43F9073A72D4");
-            params.put("orgId" , "0654a8e3feec4f00ac992bc77e816118");
-            RuHttp.sendRequest(url, params, ResultModel.class , MethodType.POST, new IRuHttpRequestListener<ResultModel>() {
-                @Override
-                public void onSuccess(ResultModel resultModel) {
-                    startTime = System.currentTimeMillis();
-                    Log.d(TAG, "onSuccess: " + new Gson().toJson(resultModel));
-                }
+        Map<String, Object> params = new TreeMap<>();
+        params.put("accessId", "86eb9eb5c28b46a3924c7935d26895c8");
+        params.put("sign", "6EC8DDF3059A2B9433DB43F9073A72D4");
+        params.put("orgId", "0654a8e3feec4f00ac992bc77e816118");
 
-                @Override
-                public void onFail(Throwable e) {
-                }
 
-            });
-//        }
+        RuHttp ruHttp = new RuHttp.Builder<>()
+                .setMethod(MethodType.POST)
+                .setUrl(url)
+                .addParam("accessId", "86eb9eb5c28b46a3924c7935d26895c8")
+                .addParam("sign", "6EC8DDF3059A2B9433DB43F9073A72D4")
+                .addParam("orgId", "0654a8e3feec4f00ac992bc77e816118")
+                .setType(ResultModel.class)
+                .setHttpRequestListener(new IRuHttpRequestListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        startTime = System.currentTimeMillis();
+                        Log.d(TAG, "成功，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
+                    }
+
+                    @Override
+                    public void onFail(Throwable e) {
+
+                        Log.e(TAG, "请求失败，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
+                    }
+                }).build();
+        for (int i = 0; i < 10000; i++) {
+            ruHttp.execute();
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_CODE:
-// 如果请求被取消，则结果数组为空
+                // 如果请求被取消，则结果数组为空
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 权限请求成功
                     Log.d(TAG, "权限请求成功: ");
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 }
