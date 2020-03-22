@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Http请求";
     private static final int REQUEST_CODE = 1111;
 
-    private String url = "https://www.wanandroid.com/user/register";
+    private String url = "http://101.37.71.102/vc/inf/route/list";
     private String[] permissionArray = new String[]{
             Manifest.permission.INTERNET
     };
@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
 //        for (int i = 0; i < 1000; i++) {
 //            final int finalI = i;
             Map<String , Object> params = new TreeMap<>();
-            params.put("username" , "Rubintry");
-            params.put("password" , "abc913430");
-            params.put("repassword" , "abc913430");
+            params.put("accessId" , "86eb9eb5c28b46a3924c7935d26895c8");
+            params.put("sign" , "6EC8DDF3059A2B9433DB43F9073A72D4");
+            params.put("orgId" , "0654a8e3feec4f00ac992bc77e816118");
             RuHttp.sendRequest(url, params, ResultModel.class , MethodType.POST, new IRuHttpRequestListener<ResultModel>() {
                 @Override
                 public void onSuccess(ResultModel resultModel) {

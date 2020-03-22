@@ -2,37 +2,28 @@ package cn.rubintry.myhttp;
 
 public class ResultModel {
 
+
     /**
-     * data : {"admin":false,"chapterTops":[],"collectIds":[],"email":"","icon":"","id":54150,"nickname":"Rubintrys","password":"","publicName":"Rubintrys","token":"","type":0,"username":"Rubintrys"}
-     * errorCode : 0
-     * errorMsg :
+     * msg : accessId不存在
+     * code : 40003
      */
 
-    private DataBean data;
-    private int errorCode;
-    private String errorMsg;
+    private String msg;
+    private int code;
 
-    public DataBean getData() {
-        return data;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getCode() {
+        return code;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setCode(int code) {
+        this.code = code;
     }
 }

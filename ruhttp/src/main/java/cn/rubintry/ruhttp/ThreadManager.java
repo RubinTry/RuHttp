@@ -135,7 +135,6 @@ public class ThreadManager {
                         }
                         Log.e(TAG, "请求失败");
                         httpTask.setRetryTimes(0);
-                        break;
                     }
 
                 } catch (InterruptedException e) {

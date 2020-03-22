@@ -3,10 +3,22 @@ package cn.rubintry.ruhttp;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 /**
  * @author logcat
@@ -74,7 +86,7 @@ public class HttpRequest implements IHttpRequest {
             //设置这个连接是否可以写入数据
             httpURLConnection.setDoInput(true);
 
-            httpURLConnection.setRequestProperty("Content-Type", ("application/json;charset=utf-8").replaceAll("\\s", ""));
+            httpURLConnection.setRequestProperty("Content-Type", ("application/json;charset=utf-8"));
 
             //设置请求方式
             httpURLConnection.setRequestMethod(method);
@@ -84,9 +96,9 @@ public class HttpRequest implements IHttpRequest {
             //-----------------------  使用字节流发送数据  -------------------------
             OutputStream out = httpURLConnection.getOutputStream();
             //缓冲字节流  包装字节流
-            BufferedOutputStream bos  = new BufferedOutputStream(out);
+            BufferedOutputStream bos = new BufferedOutputStream(out);
             //把字节流写入到缓存区中
-            if(params != null){
+            if (params != null) {
                 bos.write(params);
             }
 
@@ -96,22 +108,23 @@ public class HttpRequest implements IHttpRequest {
             out.close();
             bos.close();
             //如果响应码为200代表请求成功
-            if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream in = httpURLConnection.getInputStream();
                 Log.d(TAG, "Method: " + httpURLConnection.getRequestMethod());
                 //回调响应接口
-                if(responseListener != null){
+                if (responseListener != null) {
                     responseListener.onSuccess(in);
                 }
-            }else{
+            } else {
                 throw new RuntimeException("请求失败,错误码：" + httpURLConnection.getResponseCode() + "  ,错误信息：" + httpURLConnection.getResponseMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("请求失败，信息：" + e.getMessage());
-        }finally {
+        } finally {
             //关闭httpUrlConnection连接对象
             httpURLConnection.disconnect();
         }
     }
+
 }
