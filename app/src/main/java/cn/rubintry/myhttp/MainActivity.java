@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1111;
 
     private String url = "http://101.37.71.102/vc/inf/route/list";
-//    private String url = "https://github.com/";
+
+    private TextView tvTest;
     private String[] permissionArray = new String[]{
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_NETWORK_STATE,
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkPermission();
         setContentView(R.layout.activity_main);
-
+        tvTest = findViewById(R.id.tvTest);
     }
 
     private void checkPermission() {
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         RuHttp ruHttp = new RuHttp.Builder<>()
-                .setMethod(MethodType.GET)
+                .setMethod(MethodType.POST)
                 .setUrl(url)
                 .setType(ResultModel.class)
                 .setHttpRequestListener(new IRuHttpRequestListener<ResultModel>() {
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(ResultModel resultModel) {
                         Log.d(TAG, "结果: " + new Gson().toJson(resultModel));
+                        tvTest.setText(new Gson().toJson(resultModel));
                         Log.d(TAG, "成功，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
                         startTime = System.currentTimeMillis();
                     }
@@ -77,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "请求失败，耗时: " + (System.currentTimeMillis() - startTime) + "毫秒");
                     }
                 }).build();
-        for (int i = 0; i < 1000; i++) {
             ruHttp.execute();
-        }
     }
 
     @Override
