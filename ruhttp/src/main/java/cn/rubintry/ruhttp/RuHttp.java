@@ -15,15 +15,16 @@ public class RuHttp<T, K> {
     /**
      * 默认超时时间 10秒
      */
-    private static final int DEFAULT_CONNECT_TIMEOUT = 10000;
-    private static final int DEFAULT_READ_TIMEOUT = 10000;
-    private static final int DEFAULT_RETRY_TIMES = 3;
+    private int DEFAULT_CONNECT_TIMEOUT = 10000;
+    private int DEFAULT_READ_TIMEOUT = 10000;
+    private int DEFAULT_RETRY_TIMES = 3;
     private static int retryMaxTimes = 0;
-    private final Class<K> cls;
-    private final Map<String, T> params;
-    private final IRuHttpRequestListener listener;
-    private final String method;
-    private final String url;
+    private Class<K> cls;
+    private Map<String, T> params;
+    private IRuHttpRequestListener listener;
+    private String method;
+    private String url;
+    private int connectTimeOut;
 
     public RuHttp(Builder builder) {
         this.cls = builder.cls;
@@ -31,6 +32,7 @@ public class RuHttp<T, K> {
         this.listener = builder.listener;
         this.method = builder.method;
         this.url = builder.url;
+        this.connectTimeOut = builder.connectTimeOut;
     }
 
     public void execute() {
@@ -41,14 +43,18 @@ public class RuHttp<T, K> {
 
         //构建一个请求执行线程
         HttpTask httpTask = new HttpTask(iHttpRequest, url, params, method, DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, iRuHttpResponseListener);
+
         httpTask.setRetryMaxTimes(retryMaxTimes == 0 ? DEFAULT_RETRY_TIMES : retryMaxTimes);
-        //构建一个线程池进行管理
+
+        httpTask.setConnectTimeout(connectTimeOut);
+        //将线程添加进线程管理器
         ThreadManager.getInstance().addTask(httpTask);
     }
 
 
     /**
      * 设置最大重试次数
+     *
      * @param retryMaxTimes
      */
     public static void setRetryMaxTimes(int retryMaxTimes) {
@@ -58,6 +64,7 @@ public class RuHttp<T, K> {
 
     /**
      * http构建器
+     *
      * @param <T>
      * @param <K>
      */
@@ -66,6 +73,7 @@ public class RuHttp<T, K> {
         private Map<String, T> params;
         private Class<K> cls;
         private String method;
+        private int connectTimeOut;
         private IRuHttpRequestListener listener;
 
         public Builder() {
@@ -74,6 +82,11 @@ public class RuHttp<T, K> {
 
         public Builder setUrl(String url) {
             this.url = url;
+            return this;
+        }
+
+        public Builder<T, K> setConnectTimeOut(int connectTimeOut) {
+            this.connectTimeOut = connectTimeOut;
             return this;
         }
 

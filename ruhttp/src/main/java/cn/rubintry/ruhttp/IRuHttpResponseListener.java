@@ -11,7 +11,7 @@ public interface IRuHttpResponseListener {
     /**
      * 返回成功
      */
-    void onSuccess(InputStream is);
+    void onSuccess(String json);
 
 
     /**

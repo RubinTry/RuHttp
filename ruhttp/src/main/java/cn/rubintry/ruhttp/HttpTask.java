@@ -3,6 +3,7 @@ package cn.rubintry.ruhttp;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
@@ -32,8 +33,11 @@ public class HttpTask<T> implements Runnable, Delayed {
      */
     private IRuHttpResponseListener listener;
 
+    private HttpTask(){
 
-    public HttpTask(IHttpRequest request, String url, T params, String method, int connectTimeout, int readTimeout, IRuHttpResponseListener listener) {
+    }
+
+    public HttpTask(IHttpRequest request, String url, Map<String , Object> params, String method, int connectTimeout, int readTimeout, IRuHttpResponseListener listener) {
         this.request = request;
         this.request.setUrl(url);
         this.request.setRequestMethod(method);
@@ -42,10 +46,22 @@ public class HttpTask<T> implements Runnable, Delayed {
         this.request.setHttpResponseListener(listener);
         this.listener = listener;
         if (params != null) {
-            String jsonStr = new Gson().toJson(params);
-            this.request.setParams(jsonStr.getBytes());
+            StringBuffer urlBuffer = new StringBuffer();
+            for (String key : params.keySet()){
+                if(urlBuffer.length()!=0){
+                    urlBuffer.append("&");
+                }
+                urlBuffer.append(key).append("=").append(params.get(key));
+            }
+            this.request.setParams(urlBuffer.toString());
         }
     }
+
+
+    public void setConnectTimeout(int time){
+        this.request.setConnectTimeout(time);
+    }
+
 
     public int getRetryMaxTimes() {
         return retryMaxTimes;

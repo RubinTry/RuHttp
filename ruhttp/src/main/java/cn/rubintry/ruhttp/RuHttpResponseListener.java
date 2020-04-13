@@ -27,11 +27,11 @@ public class RuHttpResponseListener<T> implements IRuHttpResponseListener {
     }
 
     @Override
-    public void onSuccess(InputStream is) {
-        final String jsonStr = byteArrayToString(is , null);
+    public void onSuccess(final String json) {
+//        final String jsonStr = byteArrayToString(is , null);
         //如果期望的返回值为string则不进行对象转换
         if(cls != String.class){
-            final T t = new Gson().fromJson(jsonStr , cls);
+            final T t = new Gson().fromJson(json , cls);
 
             handler.post(new Runnable() {
                 @Override
@@ -46,7 +46,7 @@ public class RuHttpResponseListener<T> implements IRuHttpResponseListener {
                 @Override
                 public void run() {
                     if(listener != null){
-                        listener.onSuccess((T) jsonStr);
+                        listener.onSuccess((T) json);
                     }
                 }
             });

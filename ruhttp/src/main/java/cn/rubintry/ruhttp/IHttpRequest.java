@@ -15,9 +15,10 @@ public interface IHttpRequest {
 
 
     /**
-     * 设置请求参数
+     *  设置请求参数
+     * @param params
      */
-    void setParams(byte[] params);
+    void setParams(String params);
 
 
     /**
@@ -28,7 +29,8 @@ public interface IHttpRequest {
 
 
     /**
-     * 设置请求方式
+     *  设置请求方式
+     * @param method
      */
     void setRequestMethod(String method);
 

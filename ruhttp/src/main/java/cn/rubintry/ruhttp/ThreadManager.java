@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * 线程池管理器
  */
 public class ThreadManager {
-    private  final String TAG = this.getClass().getSimpleName();
+    private static final String TAG = "ThreadManager";
     /**
      * 建立一个线程池，用来管理队列
      */
@@ -67,7 +67,7 @@ public class ThreadManager {
 
 
     /**
-     * 添加请求线程
+     * 将请求线程添加进请求队列
      */
     public void addTask(Runnable runnable){
         if(runnable == null){
